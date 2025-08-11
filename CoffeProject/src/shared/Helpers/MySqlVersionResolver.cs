@@ -1,19 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MySqlConnector;
 
-namespace inventario.src.Shared.Helpers;
-
-public class MySqlVersionResolver
+namespace CoffeProject.shared.Helpers
 {
-    public static Version DetectVersion(string connectionString)
+    public static class MySqlVersionResolver
     {
-        using var conn = new MySqlConnection(connectionString);
-        conn.Open();
-        var raw = conn.ServerVersion;
-        var clean = raw.Split('-')[0];
-        return Version.Parse(clean);
+        public static Version DetectVersion(string connectionString)
+        {
+            using var conn = new MySqlConnection(connectionString);
+            conn.Open();
+            var raw = conn.ServerVersion; // e.g. "8.0.21-..."
+            var clean = raw.Split('-')[0];
+            return Version.Parse(clean);
+        }
     }
 }

@@ -3133,6 +3133,7 @@
       "Microsoft.Extensions.Configuration >= 9.0.8",
       "Microsoft.Extensions.Configuration.EnvironmentVariables >= 9.0.8",
       "Microsoft.Extensions.Configuration.Json >= 9.0.8",
+      "MySqlConnector >= 2.4.0",
       "Pomelo.EntityFrameworkCore.MySql >= 9.0.0-rc.1.efcore.9.0.0"
     ]
   },
@@ -3200,6 +3201,10 @@
           "Microsoft.Extensions.Configuration.Json": {
             "target": "Package",
             "version": "[9.0.8, )"
+          },
+          "MySqlConnector": {
+            "target": "Package",
+            "version": "[2.4.0, )"
           },
           "Pomelo.EntityFrameworkCore.MySql": {
             "target": "Package",

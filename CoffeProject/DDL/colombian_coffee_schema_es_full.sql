@@ -3,190 +3,187 @@ CREATE DATABASE COLCOFF CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE COLCOFF;
 
 -- Roles / Usuarios
-CREATE TABLE IF NOT EXISTS roles (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS Roles (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS usuarios (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre_usuario VARCHAR(80) NOT NULL UNIQUE,
-  correo VARCHAR(150) NOT NULL UNIQUE,
-  contrasena_hash VARCHAR(255) NOT NULL,
-  role_id INT NOT NULL,
-  esta_activo TINYINT(1) DEFAULT 1,
-  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
-  actualizado_en DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (role_id) REFERENCES roles(id)
+CREATE TABLE IF NOT EXISTS Usuarios (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  NombreUsuario VARCHAR(80) NOT NULL UNIQUE,
+  Correo VARCHAR(150) NOT NULL UNIQUE,
+  ContrasenaHash VARCHAR(255) NOT NULL,
+  RoleId INT NOT NULL,
+  EstaActivo TINYINT(1) DEFAULT 1,
+  CreadoEn DATETIME DEFAULT CURRENT_TIMESTAMP,
+  ActualizadoEn DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (RoleId) REFERENCES Roles(Id)
 ) ENGINE=InnoDB;
 
 -- Lookups (catálogos)
-CREATE TABLE IF NOT EXISTS porte (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS Porte (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS tamano_grano (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS TamanoGrano (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS potencial_rendimiento (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(80) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS PotencialRendimiento (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(80) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS nivel_calidad (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nivel TINYINT NOT NULL UNIQUE   -- 1..5
+CREATE TABLE IF NOT EXISTS NivelCalidad (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nivel TINYINT NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS tipo_resistencia (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(80) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS TipoResistencia (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(80) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS nivel_resistencia (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL UNIQUE -- Susceptible, Tolerante, Resistente
+CREATE TABLE IF NOT EXISTS NivelResistencia (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(50) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS etiquetas (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(80) NOT NULL UNIQUE
+CREATE TABLE IF NOT EXISTS Etiquetas (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Nombre VARCHAR(80) NOT NULL UNIQUE
 ) ENGINE=InnoDB;
 
 -- Variedades
-CREATE TABLE IF NOT EXISTS variedades (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nombre_comun VARCHAR(150) NOT NULL,
-  nombre_cientifico VARCHAR(200),
-  descripcion TEXT,
-  porte_id INT,
-  grain_size_id INT,
-  altitud_optima_m INT,
-  yield_potential_id INT,
-  quality_level_id INT,
-  obtentor VARCHAR(150),
-  familia VARCHAR(150),
-  grupo_genetico VARCHAR(150),
-  tiempo_cosecha VARCHAR(150),
-  maduracion VARCHAR(150),
-  notas_nutricion TEXT,
-  densidad_siembra VARCHAR(150),
-  creado_por INT,
-  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
-  actualizado_por INT,
-  actualizado_en DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (porte_id) REFERENCES porte(id),
-  FOREIGN KEY (grain_size_id) REFERENCES tamano_grano(id),
-  FOREIGN KEY (yield_potential_id) REFERENCES potencial_rendimiento(id),
-  FOREIGN KEY (quality_level_id) REFERENCES nivel_calidad(id),
-  FOREIGN KEY (creado_por) REFERENCES usuarios(id),
-  FOREIGN KEY (actualizado_por) REFERENCES usuarios(id)
+CREATE TABLE IF NOT EXISTS Variedades (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  NombreComun VARCHAR(150) NOT NULL,
+  NombreCientifico VARCHAR(200),
+  Descripcion TEXT,
+  PorteId INT,
+  GrainSizeId INT,
+  AltitudOptimaM INT,
+  YieldPotentialId INT,
+  QualityLevelId INT,
+  Obtentor VARCHAR(150),
+  Familia VARCHAR(150),
+  GrupoGenetico VARCHAR(150),
+  TiempoCosecha VARCHAR(150),
+  Maduracion VARCHAR(150),
+  NotasNutricion TEXT,
+  DensidadSiembra VARCHAR(150),
+  CreadoPor INT,
+  CreadoEn DATETIME DEFAULT CURRENT_TIMESTAMP,
+  ActualizadoPor INT,
+  ActualizadoEn DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (PorteId) REFERENCES Porte(Id),
+  FOREIGN KEY (GrainSizeId) REFERENCES TamanoGrano(Id),
+  FOREIGN KEY (YieldPotentialId) REFERENCES PotencialRendimiento(Id),
+  FOREIGN KEY (QualityLevelId) REFERENCES NivelCalidad(Id),
+  FOREIGN KEY (CreadoPor) REFERENCES Usuarios(Id),
+  FOREIGN KEY (ActualizadoPor) REFERENCES Usuarios(Id)
 ) ENGINE=InnoDB;
 
 -- Imágenes (varias por variedad)
-CREATE TABLE IF NOT EXISTS imagenes_variedad (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  variedad_id INT NOT NULL,
-  ruta_archivo VARCHAR(500) NOT NULL,
-  texto_alternativo VARCHAR(250),
-  leyenda VARCHAR(250),
-  es_principal TINYINT(1) DEFAULT 0,
-  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS ImagenesVariedad (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  VariedadId INT NOT NULL,
+  RutaArchivo VARCHAR(500) NOT NULL,
+  TextoAlternativo VARCHAR(250),
+  Leyenda VARCHAR(250),
+  EsPrincipal TINYINT(1) DEFAULT 0,
+  CreadoEn DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (VariedadId) REFERENCES Variedades(Id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 -- Resistencias (N:M con nivel)
-CREATE TABLE IF NOT EXISTS resistencias_variedad (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  variedad_id INT NOT NULL,
-  tipo_resistencia_id INT NOT NULL,
-  nivel_resistencia_id INT NOT NULL,
-  notas VARCHAR(255),
-  FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE,
-  FOREIGN KEY (tipo_resistencia_id) REFERENCES tipo_resistencia(id),
-  FOREIGN KEY (nivel_resistencia_id) REFERENCES nivel_resistencia(id),
-  UNIQUE (variedad_id, tipo_resistencia_id)
+CREATE TABLE IF NOT EXISTS ResistenciasVariedad (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  VariedadId INT NOT NULL,
+  TipoResistenciaId INT NOT NULL,
+  NivelResistenciaId INT NOT NULL,
+  Notas VARCHAR(255),
+  FOREIGN KEY (VariedadId) REFERENCES Variedades(Id) ON DELETE CASCADE,
+  FOREIGN KEY (TipoResistenciaId) REFERENCES TipoResistencia(Id),
+  FOREIGN KEY (NivelResistenciaId) REFERENCES NivelResistencia(Id),
+  UNIQUE (VariedadId, TipoResistenciaId)
 ) ENGINE=InnoDB;
 
 -- Tags (N:M)
-CREATE TABLE IF NOT EXISTS etiquetas_variedad (
-  variedad_id INT NOT NULL,
-  etiqueta_id INT NOT NULL,
-  PRIMARY KEY (variedad_id, etiqueta_id),
-  FOREIGN KEY (variedad_id) REFERENCES variedades(id) ON DELETE CASCADE,
-  FOREIGN KEY (etiqueta_id) REFERENCES etiquetas(id)
+CREATE TABLE IF NOT EXISTS EtiquetasVariedad (
+  VariedadId INT NOT NULL,
+  EtiquetaId INT NOT NULL,
+  PRIMARY KEY (VariedadId, EtiquetaId),
+  FOREIGN KEY (VariedadId) REFERENCES Variedades(Id) ON DELETE CASCADE,
+  FOREIGN KEY (EtiquetaId) REFERENCES Etiquetas(Id)
 ) ENGINE=InnoDB;
 
 -- Catálogos PDF
-CREATE TABLE IF NOT EXISTS catalogos_pdf (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT NOT NULL,
-  titulo VARCHAR(200),
-  ruta_archivo VARCHAR(500),
-  criterios_filtro JSON,
-  total_items INT DEFAULT 0,
-  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+CREATE TABLE IF NOT EXISTS CatalogosPdf (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  UsuarioId INT NOT NULL,
+  Titulo VARCHAR(200),
+  RutaArchivo VARCHAR(500),
+  CriteriosFiltro JSON,
+  TotalItems INT DEFAULT 0,
+  CreadoEn DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (UsuarioId) REFERENCES Usuarios(Id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS items_catalogo_pdf (
-  catalogo_id INT NOT NULL,
-  variedad_id INT NOT NULL,
-  orden INT DEFAULT 0,
-  PRIMARY KEY (catalogo_id, variedad_id),
-  FOREIGN KEY (catalogo_id) REFERENCES catalogos_pdf(id) ON DELETE CASCADE,
-  FOREIGN KEY (variedad_id) REFERENCES variedades(id)
+CREATE TABLE IF NOT EXISTS ItemsCatalogoPdf (
+  CatalogoId INT NOT NULL,
+  VariedadId INT NOT NULL,
+  Orden INT DEFAULT 0,
+  PRIMARY KEY (CatalogoId, VariedadId),
+  FOREIGN KEY (CatalogoId) REFERENCES CatalogosPdf(Id) ON DELETE CASCADE,
+  FOREIGN KEY (VariedadId) REFERENCES Variedades(Id)
 ) ENGINE=InnoDB;
 
 -- Historial/auditoría de cambios en variedades
-CREATE TABLE IF NOT EXISTS historial_variedad (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  variedad_id INT NOT NULL,
-  cambiado_por INT,
-  tipo_cambio VARCHAR(20),
-  cambiado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
-  diferencia JSON,
-  FOREIGN KEY (variedad_id) REFERENCES variedades(id),
-  FOREIGN KEY (cambiado_por) REFERENCES usuarios(id)
+CREATE TABLE IF NOT EXISTS HistorialVariedad (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  VariedadId INT NOT NULL,
+  CambiadoPor INT,
+  TipoCambio VARCHAR(20),
+  CambiadoEn DATETIME DEFAULT CURRENT_TIMESTAMP,
+  Diferencia JSON,
+  FOREIGN KEY (VariedadId) REFERENCES Variedades(Id),
+  FOREIGN KEY (CambiadoPor) REFERENCES Usuarios(Id)
 ) ENGINE=InnoDB;
 
 -- Índices recomendados para filtros
-CREATE INDEX IF NOT EXISTS idx_varieties_porte ON variedades(porte_id);
-CREATE INDEX IF NOT EXISTS idx_varieties_grain ON variedades(grain_size_id);
-CREATE INDEX IF NOT EXISTS idx_varieties_altitude ON variedades(altitud_optima_m);
-CREATE INDEX IF NOT EXISTS idx_varieties_yield ON variedades(yield_potential_id);
-CREATE INDEX IF NOT EXISTS idx_varieties_quality ON variedades(quality_level_id);
+CREATE INDEX idx_varieties_porte ON Variedades(PorteId);
+CREATE INDEX idx_varieties_grain ON Variedades(GrainSizeId);
+CREATE INDEX idx_varieties_altitude ON Variedades(AltitudOptimaM);
+CREATE INDEX idx_varieties_yield ON Variedades(YieldPotentialId);
+CREATE INDEX idx_varieties_quality ON Variedades(QualityLevelId);
 
--- Fulltext para búsquedas sobre nombre/descripcion (InnoDB soporta FULLTEXT en MySQL moderno)
-ALTER TABLE variedades ADD FULLTEXT INDEX IF NOT EXISTS ft_varieties_name_desc (nombre_comun, nombre_cientifico, descripcion);
+-- Fulltext
+ALTER TABLE Variedades ADD FULLTEXT INDEX ft_varieties_name_desc (NombreComun, NombreCientifico, Descripcion);
 
--- Seed data útil (roles, resistances, niveles, porte, tamano_grano, quality, yield)
-INSERT INTO roles (nombre) VALUES ('admin'), ('editor'), ('viewer')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+-- Seed data
+INSERT INTO Roles (Nombre) VALUES ('admin'), ('editor'), ('viewer')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
 
-INSERT INTO nivel_resistencia (nombre) VALUES ('Susceptible'), ('Tolerante'), ('Resistente')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+INSERT INTO NivelResistencia (Nombre) VALUES ('Susceptible'), ('Tolerante'), ('Resistente')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
 
-INSERT INTO tipo_resistencia (nombre) VALUES ('Roya'), ('Antracnosis'), ('Nematodos'), ('Broca'), ('Tizón')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+INSERT INTO TipoResistencia (Nombre) VALUES ('Roya'), ('Antracnosis'), ('Nematodos'), ('Broca'), ('Tizón')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
 
-INSERT INTO porte (nombre) VALUES ('Alto'), ('Medio'), ('Bajo')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+INSERT INTO Porte (Nombre) VALUES ('Alto'), ('Medio'), ('Bajo')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
 
-INSERT INTO tamano_grano (nombre) VALUES ('Pequeño'), ('Medio'), ('Grande')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+INSERT INTO TamanoGrano (Nombre) VALUES ('Pequeño'), ('Medio'), ('Grande')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
 
-INSERT INTO potencial_rendimiento (nombre) VALUES ('Muy bajo'), ('Bajo'), ('Medio'), ('Alto'), ('Excepcional')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
+INSERT INTO PotencialRendimiento (Nombre) VALUES ('Muy bajo'), ('Bajo'), ('Medio'), ('Alto'), ('Excepcional')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);
 
-INSERT INTO nivel_calidad (nivel) VALUES (1),(2),(3),(4),(5)
-  ON DUPLICATE KEY UPDATE nivel = VALUES(nivel);
+INSERT INTO NivelCalidad (Nivel) VALUES (1),(2),(3),(4),(5)
+  ON DUPLICATE KEY UPDATE Nivel = VALUES(Nivel);
 
--- Ejemplo de tag
-INSERT INTO etiquetas (nombre) VALUES ('Tolerante a sequía'), ('Producción alta'), ('Café de especialidad')
-  ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
-
--- Fin del archivo
+INSERT INTO Etiquetas (Nombre) VALUES ('Tolerante a sequía'), ('Producción alta'), ('Café de especialidad')
+  ON DUPLICATE KEY UPDATE Nombre = VALUES(Nombre);

@@ -1,34 +1,41 @@
-using inventario.src.Shared.Context; 
-using Microsoft.EntityFrameworkCore; 
-using Microsoft.Extensions.Configuration; 
+using System;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using CoffeProject.shared.Context;
 
-namespace inventario.src.Shared.Helpers
+namespace CoffeProject.shared.Helpers
 {
-    public class DbContextFactory
+    public class AppDbContextFactory
     {
         public static AppDbContext Create()
         {
-            var config = new ConfigurationBuilder()
+            IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
-            string? connectionString = Environment.GetEnvironmentVariable("MYSQL_CONNECTION")
-                                ?? config.GetConnectionString("MySqlDB");
 
+            var connectionString = configuration.GetConnectionString("MySqlDB");
             if (string.IsNullOrWhiteSpace(connectionString))
-                throw new InvalidOperationException("No se encontró una cadena de conexión válida.");
-            // Detectar versión MySQL 
-            var detectedVersion = MySqlVersionResolver.DetectVersion(connectionString);
-            var minVersion = new Version(8, 0, 0);
-            if (detectedVersion < minVersion)
-                throw new NotSupportedException($"Versión de MySQL no soportada: {detectedVersion}. Requiere {minVersion} o superior.");
+                throw new InvalidOperationException("No se encontró la cadena de conexión 'MySqlDB' en appsettings.json");
+
+            Version detectedVersion;
+            try
+            {
+                detectedVersion = MySqlVersionResolver.DetectVersion(connectionString);
+            }
+            catch
+            {
+                detectedVersion = new Version(8, 0, 21);
+            }
 
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseMySql(connectionString, new MySqlServerVersion(detectedVersion))
                 .Options;
-            return new AppDbContext(options); 
-        
+
+            return new AppDbContext(options);
         }
     }
 }
