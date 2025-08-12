@@ -10,15 +10,15 @@ namespace CoffeProject.modules.Panel.UI.Menus
 
         public void Mostrar(int usuarioId)
         {
-            if (_panelService.VerificarRol(usuarioId, "Administrador"))
+            if (_panelService.VerificarRol(usuarioId, "admin"))
             {
                 new MenuAdmin().Mostrar();
             }
-            else if (_panelService.VerificarRol(usuarioId, "Cliente"))
+            else if (_panelService.VerificarRol(usuarioId, "viewer"))
             {
                 new MenuCliente().Mostrar();
             }
-            else if (_panelService.VerificarRol(usuarioId, "Vendedor"))
+            else if (_panelService.VerificarRol(usuarioId, "editor"))
             {
                 new MenuVendedor().Mostrar();
             }

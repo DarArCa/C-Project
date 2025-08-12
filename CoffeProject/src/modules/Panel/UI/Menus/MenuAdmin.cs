@@ -6,8 +6,9 @@ namespace CoffeProject.modules.Panel.UI.Menus
     {
         public void Mostrar()
         {
+            Console.Clear();
             Console.WriteLine("=== Menu Admin ===");
-            // opciones admin
+            
         }
     }
 }

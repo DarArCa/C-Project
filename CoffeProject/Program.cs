@@ -47,6 +47,7 @@ internal class Program
                     break;
 
                 case "2":
+                    Console.Clear();
                     Console.Write("Usuario: ");
                     var username = Console.ReadLine() ?? string.Empty;
                     Console.Write("Contraseña: ");
