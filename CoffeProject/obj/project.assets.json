@@ -3143,11 +3143,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\felip\\C-Project\\CoffeProject\\CoffeProject.csproj",
+      "projectUniqueName": "C:\\Users\\felip\\Documents\\C-Project\\CoffeProject\\CoffeProject.csproj",
       "projectName": "CoffeProject",
-      "projectPath": "C:\\Users\\felip\\C-Project\\CoffeProject\\CoffeProject.csproj",
+      "projectPath": "C:\\Users\\felip\\Documents\\C-Project\\CoffeProject\\CoffeProject.csproj",
       "packagesPath": "C:\\Users\\felip\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\felip\\C-Project\\CoffeProject\\obj\\",
+      "outputPath": "C:\\Users\\felip\\Documents\\C-Project\\CoffeProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\felip\\AppData\\Roaming\\NuGet\\NuGet.Config"

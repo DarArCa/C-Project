@@ -1,4 +1,4 @@
-using CoffeProject.modules.User.Domain.Entities;
+using CoffeProject.modules.Panel.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeProject.shared.Context

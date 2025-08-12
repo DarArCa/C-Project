@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CoffeProject.shared.Context;
-using CoffeProject.modules.User.Infrastructure.Repositories;
-using CoffeProject.modules.User.Application.Services;
-using CoffeProject.modules.User.UI.Menus;
+using CoffeProject.modules.Panel.Infrastructure.Repositories;
+using CoffeProject.modules.Panel.Application.Services;
+using CoffeProject.modules.Panel.UI.Menus;
 
 internal class Program
 {
@@ -28,8 +28,8 @@ internal class Program
         optionsBuilder.UseMySql(conn, new MySqlServerVersion(new Version(8, 0, 21)));
 
         using var context = new AppDbContext(optionsBuilder.Options);
-        var userRepo = new UserRepository(context);
-        var userService = new UserService(userRepo);
+        var panelRepo = new PanelRepository(context);
+        var panelService = new PanelService(panelRepo);
 
         bool running = true;
         while (running)
@@ -52,19 +52,17 @@ internal class Program
                     Console.Write("Contraseña: ");
                     var password = Console.ReadLine() ?? string.Empty;
 
-                    var usuario = context.Usuarios
-                        .Include(u => u.Rol)
-                        .FirstOrDefault(u => u.NombreUsuario == username && u.ContrasenaHash == password);
+                    var usuarioId = panelService.LoginYObtenerId(username, password);
 
-                    if (usuario == null)
+                    if (usuarioId == null)
                     {
                         Console.WriteLine("Usuario o contraseña incorrectos.");
                     }
                     else
                     {
-                        var menu = new MenuPrincipal(userService);
-                        menu.Mostrar(usuario.Id);
-                        running = false; 
+                        var menu = new MenuPrincipal(panelService);
+                        menu.Mostrar(usuarioId.Value);
+                        running = false;
                     }
                     break;
 
