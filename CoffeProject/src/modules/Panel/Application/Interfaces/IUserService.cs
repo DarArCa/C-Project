@@ -1,4 +1,4 @@
-namespace CoffeProject.modules.User.Application.Interfaces
+namespace CoffeProject.modules.Panel.Application.Interfaces
 {
     public interface IUserService
     {

@@ -1,7 +1,7 @@
 using CoffeProject.modules.User.Application.Interfaces;
 using System;
 
-namespace CoffeProject.modules.User.UI.Menus
+namespace CoffeProject.modules.Panel.UI.Menus
 {
     public class MenuPrincipal
     {

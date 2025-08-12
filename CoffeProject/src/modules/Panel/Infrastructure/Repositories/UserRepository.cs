@@ -4,16 +4,11 @@ using CoffeProject.modules.User.Domain.Entities;
 using CoffeProject.modules.User.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace CoffeProject.modules.User.Infrastructure.Repositories
+namespace CoffeProject.modules.Panel.Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(AppDbContext context) : IUserRepository
     {
-        private readonly AppDbContext _context;
-
-        public UserRepository(AppDbContext context)
-        {
-            _context = context;
-        }
+        private readonly AppDbContext _context = context;
 
         public Usuario? ObtenerPorId(int id)
         {

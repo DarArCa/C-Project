@@ -1,6 +1,6 @@
 using System;
 
-namespace CoffeProject.modules.User.UI.Menus
+namespace CoffeProject.modules.Panel.UI.Menus
 {
     public class MenuAdmin
     {

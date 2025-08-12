@@ -1,16 +1,11 @@
-using CoffeProject.modules.User.Application.Interfaces;
+using CoffeProject.modules.Panel.Application.Interfaces;
 using System;
 
-namespace CoffeProject.modules.User.Application.Services
+namespace CoffeProject.modules.Panel.Application.Services
 {
-    public class UserService : IUserService
+    public class UserService(IUserRepository userRepository) : IUserService
     {
-        private readonly IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
+        private readonly IUserRepository _userRepository = userRepository;
 
         public bool VerificarRol(int usuarioId, string nombreRol)
         {

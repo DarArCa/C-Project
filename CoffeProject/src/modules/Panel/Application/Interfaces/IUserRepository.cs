@@ -1,6 +1,6 @@
 using CoffeProject.modules.User.Domain.Entities;
 
-namespace CoffeProject.modules.User.Application.Interfaces
+namespace CoffeProject.modules.Panel.Application.Interfaces
 {
     public interface IUserRepository
     {

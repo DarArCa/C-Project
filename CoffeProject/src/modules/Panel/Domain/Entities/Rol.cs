@@ -1,4 +1,4 @@
-namespace CoffeProject.modules.User.Domain.Entities
+namespace CoffeProject.modules.Panel.Domain.Entities
 {
     public class Rol
     {

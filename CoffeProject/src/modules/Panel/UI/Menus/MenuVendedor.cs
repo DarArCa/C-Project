@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoffeProject.src.modules.User.UI.Menus
+namespace CoffeProject.src.modules.Panel.UI.Menus
 {
-    public class MenuCliente
+    public class MenuVendedor
     {
         
     }
