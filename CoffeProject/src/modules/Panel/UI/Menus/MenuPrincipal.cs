@@ -1,49 +1,31 @@
-using CoffeProject.modules.User.Application.Interfaces;
+using CoffeProject.modules.Panel.UI.Menus;
+using CoffeProject.modules.Panel.Application.Interfaces;
 using System;
 
 namespace CoffeProject.modules.Panel.UI.Menus
 {
-    public class MenuPrincipal
+    public class MenuPrincipal(IPanelService panelService)
     {
-        private readonly IUserService _userService;
-
-        public MenuPrincipal(IUserService userService)
-        {
-            _userService = userService;
-        }
+        private readonly IPanelService _panelService = panelService;
 
         public void Mostrar(int usuarioId)
         {
-            if (_userService.VerificarRol(usuarioId, "admin"))
+            if (_panelService.VerificarRol(usuarioId, "admin"))
             {
-                MostrarMenuAdmin();
+                new MenuAdmin().Mostrar();
             }
-            else if (_userService.VerificarRol(usuarioId, "editor"))
+            else if (_panelService.VerificarRol(usuarioId, "viewer"))
             {
-                MostrarMenuEditor();
+                new MenuCliente().Mostrar();
+            }
+            else if (_panelService.VerificarRol(usuarioId, "editor"))
+            {
+                new MenuVendedor().Mostrar();
             }
             else
             {
-                MostrarMenuViewer();
+                Console.WriteLine("Rol no reconocido o sin permisos asignados.");
             }
-        }
-
-        private void MostrarMenuAdmin()
-        {
-            Console.WriteLine("=== Menú Administrador ===");
-            // Opciones de administración
-        }
-
-        private void MostrarMenuEditor()
-        {
-            Console.WriteLine("=== Menú Editor ===");
-            // Opciones de edición
-        }
-
-        private void MostrarMenuViewer()
-        {
-            Console.WriteLine("=== Menú Usuario ===");
-            // Opciones de solo lectura
         }
     }
 }

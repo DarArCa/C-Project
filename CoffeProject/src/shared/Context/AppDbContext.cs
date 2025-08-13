@@ -1,4 +1,4 @@
-using CoffeProject.modules.User.Domain.Entities;
+using CoffeProject.modules.Panel.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeProject.shared.Context
@@ -15,6 +15,10 @@ namespace CoffeProject.shared.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+             modelBuilder.Entity<Usuario>()
+            .HasOne(u => u.Rol)
+            .WithMany()
+            .HasForeignKey(u => u.RoleId); 
             
         }
     }

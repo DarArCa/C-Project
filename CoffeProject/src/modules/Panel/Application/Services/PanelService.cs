@@ -3,13 +3,13 @@ using System;
 
 namespace CoffeProject.modules.Panel.Application.Services
 {
-    public class UserService(IUserRepository userRepository) : IUserService
+    public class PanelService(IPanelRepository PanelRepository) : IPanelService
     {
-        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IPanelRepository _panelRepository = PanelRepository;
 
         public bool VerificarRol(int usuarioId, string nombreRol)
         {
-            var usuario = _userRepository.ObtenerPorId(usuarioId);
+            var usuario = _panelRepository.ObtenerPorId(usuarioId);
             return usuario != null &&
                    usuario.Rol != null &&
                    usuario.Rol.Nombre.Equals(nombreRol, StringComparison.OrdinalIgnoreCase);
@@ -17,7 +17,7 @@ namespace CoffeProject.modules.Panel.Application.Services
 
         public int? LoginYObtenerId(string nombreUsuario, string contrasenaHash)
         {
-            var u = _userRepository.ObtenerPorUsuarioYContrasena(nombreUsuario, contrasenaHash);
+            var u = _panelRepository.ObtenerPorUsuarioYContrasena(nombreUsuario, contrasenaHash);
             return u?.Id;
         }
     }
