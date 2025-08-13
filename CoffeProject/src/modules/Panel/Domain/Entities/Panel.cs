@@ -8,7 +8,7 @@ namespace CoffeProject.modules.Panel.Domain.Entities
         public string ContrasenaHash { get; set; } = string.Empty;
 
         public int RoleId { get; set; }
-        public Rol Rol { get; set; } = new Rol(); // inicializado para evitar warnings
+        public Rol Rol { get; set; } = new Rol(); 
         public bool EstaActivo { get; set; } = true;
     }
 }
