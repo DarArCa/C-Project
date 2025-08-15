@@ -126,7 +126,6 @@ C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.Ge
 C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.AssemblyInfoInputs.cache
 C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.AssemblyInfo.cs
 C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.csproj.CoreCompileInputs.cache
-C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.sourcelink.json
 C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.dll
 C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\refint\CoffeProject.dll
 C:\Users\felip\Documents\C-Project\CoffeProject\obj\Debug\net9.0\CoffeProject.pdb

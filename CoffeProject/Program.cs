@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using CoffeProject.shared.Context;
 using CoffeProject.modules.Panel.Infrastructure.Repositories;
 using CoffeProject.modules.Panel.Application.Services;
+using CoffeProject.modules.Panel.Application.Interfaces;
 using CoffeProject.modules.Panel.UI.Menus;
 
 internal class Program
@@ -20,7 +21,9 @@ internal class Program
         var conn = configuration.GetConnectionString("MySqlDB");
         if (string.IsNullOrWhiteSpace(conn))
         {
-            Console.WriteLine("No hay cadena de conexión 'MySqlDB' en appsettings.json");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("❌ No hay cadena de conexión 'MySqlDB' en appsettings.json");
+            Console.ResetColor();
             return;
         }
 
@@ -28,42 +31,67 @@ internal class Program
         optionsBuilder.UseMySql(conn, new MySqlServerVersion(new Version(8, 0, 21)));
 
         using var context = new AppDbContext(optionsBuilder.Options);
-        var panelRepo = new PanelRepository(context);
-        var panelService = new PanelService(panelRepo);
+
+        IPanelRepository panelRepo = new PanelRepository(context);
+        IPanelService panelService = new PanelService(panelRepo);
+
+        IAdminRepository adminRepo = new AdminRepository(context);
+        IAdmin adminService = new AdminService(adminRepo);
 
         bool running = true;
         while (running)
         {
-            Console.WriteLine("1---Registrarse");
-            Console.WriteLine("2---Iniciar Sesion");
-            Console.WriteLine("3---Salir");
-            Console.Write("Seleccione una opción: ");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("╔═══════════════════════════════════════════╗");
+            Console.WriteLine("║        ☕ BIENVENIDO A COFFE PROJECT      ║");
+            Console.WriteLine("╚═══════════════════════════════════════════╝");
+            Console.ResetColor();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("1️⃣  Registrarse");
+            Console.WriteLine("2️⃣  Iniciar Sesión");
+            Console.WriteLine("3️⃣  Salir");
+            Console.ResetColor();
+
+            Console.Write("\nSeleccione una opción: ");
             var option = Console.ReadLine();
 
             switch (option)
             {
                 case "1":
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("=== 📝 REGISTRO ===");
+                    Console.ResetColor();
                     Console.WriteLine("Funcionalidad de registro aún no implementada.");
                     break;
 
                 case "2":
                     Console.Clear();
-                    Console.Write("Usuario: ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("=== 🔑 INICIO DE SESIÓN ===");
+                    Console.ResetColor();
+
+                    Console.Write("👤 Usuario: ");
                     var username = Console.ReadLine() ?? string.Empty;
-                    Console.Write("Contraseña: ");
+                    Console.Write("🔒 Contraseña: ");
                     var password = Console.ReadLine() ?? string.Empty;
 
                     var usuarioId = panelService.LoginYObtenerId(username, password);
 
                     if (usuarioId == null)
                     {
-                        Console.WriteLine("Usuario o contraseña incorrectos.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\n❌ Usuario o contraseña incorrectos.");
+                        Console.ResetColor();
+                        Console.WriteLine("\nPresione una tecla para continuar...");
+                        Console.ReadKey();
                     }
                     else
                     {
-                        var menu = new MenuPrincipal(panelService);
+                        var menu = new MenuPrincipal(panelService, adminService);
                         menu.Mostrar(usuarioId.Value);
-                        running = false;
                     }
                     break;
 
@@ -72,9 +100,16 @@ internal class Program
                     break;
 
                 default:
-                    Console.WriteLine("Opción inválida, intente nuevamente.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n❌ Opción inválida, intente nuevamente.");
+                    Console.ResetColor();
                     break;
             }
         }
+
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("👋 Gracias por usar Coffe Project. ¡Hasta pronto!");
+        Console.ResetColor();
     }
 }
