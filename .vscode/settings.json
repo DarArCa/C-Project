@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "EstructuraHexagonalPt1"
+        "EstructuraHexagonalPt1",
+        "Manejo De Usuarios"
     ]
 }

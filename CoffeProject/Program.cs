@@ -7,6 +7,9 @@ using CoffeProject.modules.Panel.Infrastructure.Repositories;
 using CoffeProject.modules.Panel.Application.Services;
 using CoffeProject.modules.Panel.Application.Interfaces;
 using CoffeProject.modules.Panel.UI.Menus;
+using CoffeProject.modules.User.Infrastructure.Repositories;
+using CoffeProject.modules.User.Application.Services;
+using CoffeProject.modules.User.UI.Menus;
 
 internal class Program
 {
@@ -59,14 +62,13 @@ internal class Program
 
             switch (option)
             {
+                
                 case "1":
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine("=== 📝 REGISTRO ===");
-                    Console.ResetColor();
-                    Console.WriteLine("Funcionalidad de registro aún no implementada.");
+                    var userRepo = new UserRepository(context);
+                    var userService = new UserService(userRepo);
+                    var registerMenu = new RegisterMenu(userService);
+                    registerMenu.Mostrar();
                     break;
-
                 case "2":
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Blue;
