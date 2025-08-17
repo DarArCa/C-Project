@@ -1,4 +1,5 @@
 using CoffeProject.modules.Panel.Application.Interfaces;
+using CoffeProject.modules.VariedadesCafe.Application.Services;
 using System;
 
 namespace CoffeProject.modules.Panel.UI.Menus
@@ -7,11 +8,13 @@ namespace CoffeProject.modules.Panel.UI.Menus
     {
         private readonly IPanelService _panelService;
         private readonly IAdmin _adminService;
+        private readonly VariedadService _variedadService;
 
-        public MenuPrincipal(IPanelService panelService, IAdmin adminService)
+        public MenuPrincipal(IPanelService panelService, IAdmin adminService, VariedadService variedadService)
         {
             _panelService = panelService;
             _adminService = adminService;
+            _variedadService = variedadService;
         }
 
         public void Mostrar(int usuarioId)
@@ -29,11 +32,12 @@ namespace CoffeProject.modules.Panel.UI.Menus
                 Console.WriteLine("Cargando menú de administración...");
                 new MenuAdmin(_adminService).Mostrar();
             }
-            else if (_panelService.VerificarRol(usuarioId, "Cliente"))
+            else if (_panelService.VerificarRol(usuarioId, "Cliente") || 
+                     _panelService.VerificarRol(usuarioId, "viewer"))
             {
                 Console.WriteLine("\n👤 Acceso: Cliente");
                 Console.WriteLine("Cargando menú de cliente...");
-                new MenuCliente().Mostrar();
+                new MenuCliente(_variedadService).Mostrar();
             }
             else if (_panelService.VerificarRol(usuarioId, "Vendedor"))
             {

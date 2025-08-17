@@ -10,6 +10,8 @@ using CoffeProject.modules.Panel.UI.Menus;
 using CoffeProject.modules.User.Infrastructure.Repositories;
 using CoffeProject.modules.User.Application.Services;
 using CoffeProject.modules.User.UI.Menus;
+using CoffeProject.modules.VariedadesCafe.Infrastructure.Repositories;
+using CoffeProject.modules.VariedadesCafe.Application.Services;
 
 internal class Program
 {
@@ -35,11 +37,16 @@ internal class Program
 
         using var context = new AppDbContext(optionsBuilder.Options);
 
+        // Servicios panel y admin
         IPanelRepository panelRepo = new PanelRepository(context);
         IPanelService panelService = new PanelService(panelRepo);
 
         IAdminRepository adminRepo = new AdminRepository(context);
         IAdmin adminService = new AdminService(adminRepo);
+
+        // Servicio de variedades (usa repo directo con conexión MySQL)
+        var variedadRepo = new VariedadRepository(conn);
+        var variedadService = new VariedadService(variedadRepo);
 
         bool running = true;
         while (running)
@@ -62,13 +69,13 @@ internal class Program
 
             switch (option)
             {
-                
                 case "1":
                     var userRepo = new UserRepository(context);
                     var userService = new UserService(userRepo);
                     var registerMenu = new RegisterMenu(userService);
                     registerMenu.Mostrar();
                     break;
+
                 case "2":
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Blue;
@@ -92,7 +99,7 @@ internal class Program
                     }
                     else
                     {
-                        var menu = new MenuPrincipal(panelService, adminService);
+                        var menu = new MenuPrincipal(panelService, adminService, variedadService);
                         menu.Mostrar(usuarioId.Value);
                     }
                     break;

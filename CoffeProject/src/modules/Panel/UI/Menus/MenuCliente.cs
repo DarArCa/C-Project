@@ -1,37 +1,48 @@
 using System;
+using CoffeProject.modules.VariedadesCafe.Application.Services;
+using CoffeProject.modules.VariedadesCafe.UI;
 
 namespace CoffeProject.modules.Panel.UI.Menus
 {
     public class MenuCliente
     {
+        private readonly VariedadService _variedadService;
+
+        public MenuCliente(VariedadService variedadService)
+        {
+            _variedadService = variedadService;
+        }
+
         public void Mostrar()
         {
-            Console.WriteLine("=== Menú Cliente ===");
-            Console.WriteLine("1. Ver productos");
-            Console.WriteLine("2. Realizar pedido");
-            Console.WriteLine("3. Ver historial de compras");
-            Console.WriteLine("4. Salir");
+            bool salir = false;
 
-            Console.Write("Seleccione una opción: ");
-            var opcion = Console.ReadLine();
-
-            switch (opcion)
+            while (!salir)
             {
-                case "1":
-                    Console.WriteLine("Mostrando productos...");
-                    break;
-                case "2":
-                    Console.WriteLine("Realizando pedido...");
-                    break;
-                case "3":
-                    Console.WriteLine("Historial de compras...");
-                    break;
-                case "4":
-                    Console.WriteLine("Saliendo...");
-                    break;
-                default:
-                    Console.WriteLine("Opción inválida.");
-                    break;
+                Console.Clear();
+                Console.WriteLine("╔═══════════════════════════════════════════════════════╗");
+                Console.WriteLine("║                 👤 MENÚ DEL CLIENTE                   ║");
+                Console.WriteLine("╚═══════════════════════════════════════════════════════╝\n");
+
+                Console.WriteLine("1️⃣  Ver catálogo de variedades de café");
+                Console.WriteLine("0️⃣  Volver al panel principal\n");
+
+                Console.Write("👉 Seleccione una opción: ");
+                string? opcion = Console.ReadLine();
+
+                switch (opcion)
+                {
+                    case "1":
+                        new CatalogoMenu(_variedadService).Mostrar();
+                        break;
+                    case "0":
+                        salir = true;
+                        break;
+                    default:
+                        Console.WriteLine("\n⚠️ Opción no válida. Presione una tecla...");
+                        Console.ReadKey();
+                        break;
+                }
             }
         }
     }
