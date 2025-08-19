@@ -1,5 +1,8 @@
+using System;
 using CoffeProject.modules.Panel.Application.Interfaces;
-using CoffeProject.modules.VariedadesCafe.Application.Services;
+using CoffeProject.modules.VariedadesCafe.Application.Interfaces; // 👈 este es el correcto
+
+
 using System;
 
 namespace CoffeProject.modules.Panel.UI.Menus
@@ -8,9 +11,9 @@ namespace CoffeProject.modules.Panel.UI.Menus
     {
         private readonly IPanelService _panelService;
         private readonly IAdmin _adminService;
-        private readonly VariedadService _variedadService;
+        private readonly IVariedadService _variedadService;
 
-        public MenuPrincipal(IPanelService panelService, IAdmin adminService, VariedadService variedadService)
+        public MenuPrincipal(IPanelService panelService, IAdmin adminService, IVariedadService variedadService)
         {
             _panelService = panelService;
             _adminService = adminService;

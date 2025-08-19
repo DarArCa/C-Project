@@ -1,14 +1,15 @@
 using System;
-using CoffeProject.modules.VariedadesCafe.Application.Services;
+using CoffeProject.modules.VariedadesCafe.Application.Interfaces;
 using CoffeProject.modules.VariedadesCafe.UI;
+
 
 namespace CoffeProject.modules.Panel.UI.Menus
 {
     public class MenuCliente
     {
-        private readonly VariedadService _variedadService;
+        private readonly IVariedadService _variedadService;
 
-        public MenuCliente(VariedadService variedadService)
+        public MenuCliente(IVariedadService variedadService)
         {
             _variedadService = variedadService;
         }
@@ -25,6 +26,7 @@ namespace CoffeProject.modules.Panel.UI.Menus
                 Console.WriteLine("╚═══════════════════════════════════════════════════════╝\n");
 
                 Console.WriteLine("1️⃣  Ver catálogo de variedades de café");
+                Console.WriteLine("2️⃣  Filtrar variedades de café");
                 Console.WriteLine("0️⃣  Volver al panel principal\n");
 
                 Console.Write("👉 Seleccione una opción: ");
@@ -34,6 +36,9 @@ namespace CoffeProject.modules.Panel.UI.Menus
                 {
                     case "1":
                         new CatalogoMenu(_variedadService).Mostrar();
+                        break;
+                    case "2":
+                        new FiltroMenu(_variedadService).Mostrar();
                         break;
                     case "0":
                         salir = true;

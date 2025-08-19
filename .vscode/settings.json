@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "EstructuraHexagonalPt1",
-        "Manejo De Usuarios"
+        "Manejo De Usuarios",
+        "filtros"
     ]
 }
